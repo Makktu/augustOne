@@ -21,18 +21,24 @@ export default function ModalInput({ visible, dismissModal }) {
   return (
     <Modal visible={visible} animationType='slide'>
       <View style={styles.container}>
-        <Quotations />
+        <View style={styles.quoteArea}>
+          {quoteShowing ? <Quotations /> : null}
+        </View>
         <TextInput
           style={styles.textInputStyle}
           value={enteredText}
           placeholder='Enter Something'
           placeholderTextColor='#504c4c'
-          onChangeText={textInputHandler}
+          onChangeText={() => {
+            setQuoteShowing(false);
+            textInputHandler();
+          }}
         />
         <Pressable
           style={styles.saveBtnStyle}
           onPress={() => {
             setEnteredText('');
+            setQuoteShowing(true);
             dismissModal();
           }}
         >
@@ -42,6 +48,7 @@ export default function ModalInput({ visible, dismissModal }) {
           style={styles.btnStyle}
           onPress={() => {
             setEnteredText('');
+            setQuoteShowing(true);
             dismissModal();
           }}
         >
@@ -92,5 +99,9 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 30,
     fontWeight: 'bold',
+  },
+  quoteArea: {
+    height: 200,
+    width: '100%',
   },
 });
