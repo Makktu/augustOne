@@ -18,9 +18,22 @@ export default function App() {
     <View style={styles.container}>
       <ModalInput visible={modalVisible} dismissModal={dismissModal} />
       <StatusBar barStyle='light-content' />
+      <Text style={styles.mainTextStyle}>OrganiZer</Text>
       <Pressable style={styles.tempPressable} onPress={() => summonModal()}>
         <Text style={styles.btnTextStyle}>NEW ENTRY</Text>
       </Pressable>
+      {
+        // * SHOW TASKS
+      }
+      <Pressable
+        style={styles.showTasksBtn}
+        onPress={() => console.log('show tasks pressed')}
+      >
+        <Text style={styles.btnTextStyle}>Show Tasks</Text>
+      </Pressable>
+      {
+        // * SHOW TASKS
+      }
       <StatusBar style='auto' />
     </View>
   );
@@ -35,7 +48,7 @@ const styles = StyleSheet.create({
   },
   mainTextStyle: {
     color: 'orangered',
-    fontSize: 20,
+    fontSize: 30,
   },
   secondaryTextStyle: {
     color: 'whitesmoke',
@@ -44,6 +57,16 @@ const styles = StyleSheet.create({
     width: '75%',
     height: 60,
     backgroundColor: '#3bb130',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 10,
+    margin: 20,
+    borderRadius: 15,
+  },
+  showTasksBtn: {
+    width: '75%',
+    height: 60,
+    backgroundColor: '#7caec6',
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 10,

@@ -27,6 +27,10 @@ const quotations = [
       'All you need is the plan, the road map, and the courage to press on to your destination.',
     quotee: 'Earl Nightingale',
   },
+  {
+    quote: 'A man, a plan, a canal, Panama!',
+    quotee: 'Anonymous',
+  },
 ];
 
 export default quotations;
