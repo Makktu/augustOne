@@ -15,8 +15,8 @@ export default function ModalInput({ addTaskHandler, visible, dismissModal }) {
   const [quoteShowing, setQuoteShowing] = useState(true);
 
   const textInputHandler = (enteredText) => {
+    if (setQuoteShowing) setQuoteShowing(false);
     setEnteredText(enteredText);
-    console.log(enteredText);
   };
 
   return (
@@ -28,13 +28,9 @@ export default function ModalInput({ addTaskHandler, visible, dismissModal }) {
         <TextInput
           style={styles.textInputStyle}
           value={enteredText}
-          placeholder='Enter Something'
+          placeholder='Input a Task !'
           placeholderTextColor='#504c4c'
-          onChangeText={() => {
-            if (setQuoteShowing) setQuoteShowing(false);
-            console.log(enteredText);
-            textInputHandler();
-          }}
+          onChangeText={textInputHandler}
         />
         <Pressable
           style={styles.saveBtnStyle}

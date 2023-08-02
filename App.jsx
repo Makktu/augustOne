@@ -4,20 +4,11 @@ import { StyleSheet, Text, View, StatusBar, Pressable } from 'react-native';
 import ModalInput from './components/ModalInput';
 import TaskList from './components/TaskList';
 import getUniqueKey from './helpers/getUniqueKey';
-// import allTasks from './helpers/testTasks';
+import startingTasks from './helpers/testTasks';
 
 export default function App() {
   const [modalVisible, setModalVisible] = useState(false);
-  const [allTasks, setAllTasks] = useState([
-    { task: 'Testing1', taskDone: false, id: 999 },
-    { task: 'Testing2', taskDone: true, id: 998 },
-    { task: 'Testing3', taskDone: true, id: 997 },
-    { task: 'Testing4', taskDone: false, id: 996 },
-    { task: 'Testing1', taskDone: true, id: 995 },
-    { task: 'Testing2', taskDone: true, id: 994 },
-    { task: 'Testing3', taskDone: true, id: 993 },
-    { task: 'Testing4', taskDone: false, id: 992 },
-  ]);
+  const [allTasks, setAllTasks] = useState(startingTasks);
 
   const summonModal = () => {
     setModalVisible(true);
@@ -29,7 +20,10 @@ export default function App() {
 
   const addTaskHandler = (enteredText) => {
     let newKey = getUniqueKey(allTasks);
-    console.log(newKey, enteredText, '✅');
+    setAllTasks((currentAllTasks) => [
+      ...currentAllTasks,
+      { task: enteredText, taskDone: false, id: newKey },
+    ]);
   };
 
   return (
@@ -45,12 +39,12 @@ export default function App() {
         <Pressable style={styles.tempPressable} onPress={() => summonModal()}>
           <Text style={styles.btnTextStyle}>NEW ENTRY</Text>
         </Pressable>
-        <Pressable
+        {/* <Pressable
           style={styles.showTasksBtn}
           onPress={() => console.log('show tasks pressed')}
         >
           <Text style={styles.btnTextStyle}>Show Tasks</Text>
-        </Pressable>
+        </Pressable> */}
       </View>
       <View style={styles.taskContainer}>
         <TaskList allTasks={allTasks} />
