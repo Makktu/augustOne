@@ -3,9 +3,21 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, StatusBar, Pressable } from 'react-native';
 import ModalInput from './components/ModalInput';
 import TaskList from './components/TaskList';
+import getUniqueKey from './helpers/getUniqueKey';
+// import allTasks from './helpers/testTasks';
 
 export default function App() {
   const [modalVisible, setModalVisible] = useState(false);
+  const [allTasks, setAllTasks] = useState([
+    { task: 'Testing1', taskDone: false, id: 999 },
+    { task: 'Testing2', taskDone: true, id: 998 },
+    { task: 'Testing3', taskDone: true, id: 997 },
+    { task: 'Testing4', taskDone: false, id: 996 },
+    { task: 'Testing1', taskDone: true, id: 995 },
+    { task: 'Testing2', taskDone: true, id: 994 },
+    { task: 'Testing3', taskDone: true, id: 993 },
+    { task: 'Testing4', taskDone: false, id: 992 },
+  ]);
 
   const summonModal = () => {
     setModalVisible(true);
@@ -15,28 +27,33 @@ export default function App() {
     setModalVisible(false);
   };
 
+  const addTaskHandler = (enteredText) => {
+    let newKey = getUniqueKey(allTasks);
+    console.log(newKey, enteredText, '✅');
+  };
+
   return (
     <View style={styles.container}>
-      <ModalInput visible={modalVisible} dismissModal={dismissModal} />
+      <ModalInput
+        visible={modalVisible}
+        addTaskHandler={addTaskHandler}
+        dismissModal={dismissModal}
+      />
       <StatusBar barStyle='light-content' />
-      <Text style={styles.mainTextStyle}>OrganiZer</Text>
-      <Pressable style={styles.tempPressable} onPress={() => summonModal()}>
-        <Text style={styles.btnTextStyle}>NEW ENTRY</Text>
-      </Pressable>
-      {
-        // * SHOW TASKS
-      }
-      <Pressable
-        style={styles.showTasksBtn}
-        onPress={() => console.log('show tasks pressed')}
-      >
-        <Text style={styles.btnTextStyle}>Show Tasks</Text>
-      </Pressable>
-      {
-        // * SHOW TASKS
-      }
+      <View style={styles.topViewStyle}>
+        <Text style={styles.mainTextStyle}>OrganiZer</Text>
+        <Pressable style={styles.tempPressable} onPress={() => summonModal()}>
+          <Text style={styles.btnTextStyle}>NEW ENTRY</Text>
+        </Pressable>
+        <Pressable
+          style={styles.showTasksBtn}
+          onPress={() => console.log('show tasks pressed')}
+        >
+          <Text style={styles.btnTextStyle}>Show Tasks</Text>
+        </Pressable>
+      </View>
       <View style={styles.taskContainer}>
-        <TaskList />
+        <TaskList allTasks={allTasks} />
       </View>
     </View>
   );
@@ -50,12 +67,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#181a32',
   },
   taskContainer: {
-    flex: 7,
+    flex: 2,
+    width: '100%',
   },
-
   mainTextStyle: {
     color: 'orangered',
-    fontSize: 30,
+    fontSize: 44,
   },
   secondaryTextStyle: {
     color: 'whitesmoke',
@@ -67,7 +84,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 10,
-    margin: 20,
+    margin: 8,
     borderRadius: 15,
   },
   showTasksBtn: {
@@ -77,11 +94,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 10,
-    margin: 20,
+    margin: 8,
     borderRadius: 15,
   },
   btnTextStyle: {
     fontSize: 28,
     fontWeight: 'bold',
+  },
+  topViewStyle: {
+    marginTop: 10,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

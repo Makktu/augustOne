@@ -10,29 +10,17 @@ import {
 } from 'react-native';
 import Quotations from './Quotations';
 
-export default function ModalInput({ visible, dismissModal }) {
+export default function ModalInput({ addTaskHandler, visible, dismissModal }) {
   const [enteredText, setEnteredText] = useState('');
   const [quoteShowing, setQuoteShowing] = useState(true);
 
-  const helloModal = () => {
-    console.log('Modal up and running');
-  };
-
-  const goodbyeModal = () => {
-    console.log('Modal is gone');
-  };
-
   const textInputHandler = (enteredText) => {
     setEnteredText(enteredText);
+    console.log(enteredText);
   };
 
   return (
-    <Modal
-      visible={visible}
-      animationType='slide'
-      onShow={helloModal}
-      onDismiss={goodbyeModal}
-    >
+    <Modal visible={visible} animationType='slide'>
       <View style={styles.container}>
         <View style={styles.quoteArea}>
           {quoteShowing ? <Quotations /> : null}
@@ -43,15 +31,17 @@ export default function ModalInput({ visible, dismissModal }) {
           placeholder='Enter Something'
           placeholderTextColor='#504c4c'
           onChangeText={() => {
-            setQuoteShowing(false);
+            if (setQuoteShowing) setQuoteShowing(false);
+            console.log(enteredText);
             textInputHandler();
           }}
         />
         <Pressable
           style={styles.saveBtnStyle}
           onPress={() => {
-            setEnteredText('');
             setQuoteShowing(true);
+            addTaskHandler(enteredText);
+            setEnteredText('');
             dismissModal();
           }}
         >
