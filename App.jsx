@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, StatusBar, Pressable } from 'react-native';
 import ModalInput from './components/ModalInput';
+import TaskList from './components/TaskList';
 
 export default function App() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -34,7 +35,9 @@ export default function App() {
       {
         // * SHOW TASKS
       }
-      <StatusBar style='auto' />
+      <View style={styles.taskContainer}>
+        <TaskList />
+      </View>
     </View>
   );
 }
@@ -46,6 +49,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#181a32',
   },
+  taskContainer: {
+    flex: 7,
+  },
+
   mainTextStyle: {
     color: 'orangered',
     fontSize: 30,
