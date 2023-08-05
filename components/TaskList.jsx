@@ -2,7 +2,7 @@ import { StyleSheet, View, FlatList } from 'react-native';
 import React from 'react';
 import TaskItem from './TaskItem';
 
-export default function TaskList({ allTasks }) {
+export default function TaskList({ allTasks, deleteTaskHandler }) {
   return (
     <View>
       <FlatList
@@ -13,6 +13,7 @@ export default function TaskList({ allTasks }) {
               taskData={taskData.item}
               taskDone={taskData.item.taskDone}
               id={taskData.item.id}
+              deleteTask={deleteTaskHandler}
             />
           );
         }}

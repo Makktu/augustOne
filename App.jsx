@@ -26,6 +26,19 @@ export default function App() {
     ]);
   };
 
+  const changeTaskDoneHandler = (taskId) => {
+    setAllTasks((currentAllTasks) => [
+      ...currentAllTasks,
+      { task: enteredText, taskDone: false, id: newKey },
+    ]);
+  };
+
+  const deleteTaskHandler = (deleteId) => {
+    setAllTasks((currentAllTasks) => {
+      return currentAllTasks.filter((task) => task.id !== deleteId);
+    });
+  };
+
   return (
     <View style={styles.container}>
       <ModalInput
@@ -47,7 +60,7 @@ export default function App() {
         </Pressable> */}
       </View>
       <View style={styles.taskContainer}>
-        <TaskList allTasks={allTasks} />
+        <TaskList allTasks={allTasks} deleteTaskHandler={deleteTaskHandler} />
       </View>
     </View>
   );
