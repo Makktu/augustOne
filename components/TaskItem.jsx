@@ -1,15 +1,19 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import React from 'react';
 
-export default function TaskItem({ taskData, deleteTask, taskDone }) {
+export default function TaskItem({
+  taskData,
+  deleteTask,
+  taskDone,
+  changeUndoneToDone,
+}) {
   return (
     <Pressable
       onPress={() => {
-        console.log('delete pressed');
-        if (taskDone) {
+        if (!taskDone) {
+          changeUndoneToDone(taskData.id);
+        } else {
           deleteTask(taskData.id);
-        } else if (!taskDone) {
-          taskDone = true;
         }
       }}
     >
@@ -23,7 +27,7 @@ export default function TaskItem({ taskData, deleteTask, taskDone }) {
           {taskDone ? (
             <Text style={styles.taskTextStyle}>✅</Text>
           ) : (
-            <Text style={styles.taskTextStyle}>😢</Text>
+            <Text style={styles.taskTextStyle}>⏳</Text>
           )}
         </View>
       </View>

@@ -26,11 +26,12 @@ export default function App() {
     ]);
   };
 
-  const changeTaskDoneHandler = (taskId) => {
-    setAllTasks((currentAllTasks) => [
-      ...currentAllTasks,
-      { task: enteredText, taskDone: false, id: newKey },
-    ]);
+  const changeUndoneToDone = (taskId) => {
+    let shallowCopy = [...allTasks];
+    shallowCopy.forEach((task) => {
+      if (task.id === taskId) task.taskDone = true;
+    });
+    setAllTasks(shallowCopy);
   };
 
   const deleteTaskHandler = (deleteId) => {
@@ -60,7 +61,12 @@ export default function App() {
         </Pressable> */}
       </View>
       <View style={styles.taskContainer}>
-        <TaskList allTasks={allTasks} deleteTaskHandler={deleteTaskHandler} />
+        <TaskList
+          allTasks={allTasks}
+          deleteTaskHandler={deleteTaskHandler}
+          setAllTasks={setAllTasks}
+          changeUndoneToDone={changeUndoneToDone}
+        />
       </View>
     </View>
   );

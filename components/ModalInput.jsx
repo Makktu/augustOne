@@ -9,14 +9,24 @@ import {
   Pressable,
 } from 'react-native';
 import Quotations from './Quotations';
+import AlertMessage from './AlertMessage';
 
 export default function ModalInput({ addTaskHandler, visible, dismissModal }) {
   const [enteredText, setEnteredText] = useState('');
   const [quoteShowing, setQuoteShowing] = useState(true);
+  const [alertMessage, setAlertMessage] = useState('');
 
   const textInputHandler = (enteredText) => {
-    if (setQuoteShowing) setQuoteShowing(false);
+    if (setQuoteShowing) {
+      setQuoteShowing(false);
+    }
+    if (enteredText.length > 18) {
+      setAlertMessage('Maximum 18 characters in a Task !');
+      return;
+    }
+    if (alertMessage) setAlertMessage('');
     setEnteredText(enteredText);
+    setAlertMessage(enteredText.length + '/18 characters');
   };
 
   return (
@@ -24,6 +34,9 @@ export default function ModalInput({ addTaskHandler, visible, dismissModal }) {
       <View style={styles.container}>
         <View style={styles.quoteArea}>
           {quoteShowing ? <Quotations /> : null}
+        </View>
+        <View style={styles.errorArea}>
+          {alertMessage ? <AlertMessage alertMessage={alertMessage} /> : null}
         </View>
         <TextInput
           style={styles.textInputStyle}
@@ -38,6 +51,7 @@ export default function ModalInput({ addTaskHandler, visible, dismissModal }) {
             setQuoteShowing(true);
             addTaskHandler(enteredText);
             setEnteredText('');
+            setAlertMessage('');
             dismissModal();
           }}
         >
@@ -48,6 +62,7 @@ export default function ModalInput({ addTaskHandler, visible, dismissModal }) {
           onPress={() => {
             setEnteredText('');
             setQuoteShowing(true);
+            setAlertMessage('');
             dismissModal();
           }}
         >
@@ -101,6 +116,10 @@ const styles = StyleSheet.create({
   },
   quoteArea: {
     height: 200,
+    width: '100%',
+  },
+  errorArea: {
+    height: 60,
     width: '100%',
   },
 });
